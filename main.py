@@ -1,10 +1,7 @@
 from chanim import *
 # or: from manimlib import *
 from manim_slides.slide import Slide
-from scipy.special import sph_harm
-from manim_meshes.models.manim_models.opengl_mesh import FastManimMesh
-from manim_meshes.models.data_models.mesh import Mesh
-from trimesh import load_mesh
+import numpy as np
 
 
 class Introduction(Slide):
@@ -18,30 +15,20 @@ class Introduction(Slide):
         self.play(Transform(title, expanded_title))
 
 
-class Test(Slide):
-    def construct(self):
-        tmesh = load_mesh('test.obj', file_type='obj')
-        print("test")
-
-        mesh = FastManimMesh(mesh=Mesh(tmesh.vertices, tmesh.faces))
-        print("test")
-        self.add(mesh)
-
-
 class Benzene(Slide):
     def construct(self):
-        chem = ChemWithName(r'*6(-=-=-=)', "Caffeine")
-        chem.scale(0.1)
+        chem = ChemWithName(r'*6(-=-=-=)', 'Benzene')
 
-        self.play(chem.creation_anim())
+        self.play(chem.creation_anim(), run_time=1)
+
+        self.next_slide()
+
+        for j in range(6):
+            sp2 = MathTex("sp^2", font_size=20, color='red')
+            sp2.move_to(1.75 * np.array([np.cos(j * np.pi / 3 + np.pi / 6), np.sin(j * np.pi / 3 + np.pi / 6), 0]))
+            self.play(Create(sp2), run_time=0.3)
 
         self.wait()
-        # template = TexTemplate()
-        # template.add_to_preamble(r'\usepackage{chemfig}')
-        # chem = Tex(r"\chemfig{*6((=O)-N(-CH_3)-*5(-N=-N(-CH_3)-=)--(=O)-N(-H_3C)-)}", tex_template=template)
-        #
-        # self.play(Create(chem))
-        # self.wait()
 
 
 class SphericalHarmonicSurface:
