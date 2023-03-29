@@ -14,6 +14,41 @@ class Introduction(Slide):
         expanded_title = Text('Organic Light Emitting Diodes')
         self.play(Transform(title, expanded_title))
 
+        self.next_slide()
+        self.play(FadeOut(expanded_title))
+
+
+class InorganicVSOrganic(Slide):
+    def construct(self):
+        crystal = ImageMobject('assets/crystal.png')
+        crystal.move_to((-3.5, 0, 0))
+        self.play(FadeIn(crystal))
+
+        self.next_slide()
+
+        cross = Cross(stroke_width=12, scale_factor=1.75).move_to(crystal)
+        self.play(Create(cross))
+
+        self.next_slide()
+
+        alq3 = ChemWithName(r'''H-[:30,0.62]-[:90]=_[:30](-[:89.1,1.042]N=^[:149.6,1.042](%
+                            -[:89.8,0.62]H)-[:210,1.042](-[:150.2,0.62]H)=^[:270.4,1.042](%
+                            -[:210.7,0.62]H)-[:330.9,1.042])-[:330](=_[:270](-[:330,0.62]H)-[:210](%
+                            -[:270,0.62]H)=_[:150])-[:30]O-[:330]Al(-[:270]O-[:330]-[:270]%
+                            -[:209.1,1.042]N=^[:269.6,1.042](-[:209.8,0.62]H)-[:330,1.042](%
+                            -[:270.2,0.62]H)=^[:30.4,1.042](-[:330.7,0.62]H)-[:90.9,1.042](-[:30](%
+                            -[:330,0.62]H)=^[:90](-[:30,0.62]H)-[:150](-[:90,0.62]H)=^[:210])=_[:150])%
+                            -[:30]O-[:90]-[:30]-[:329.1,1.042]N=^[:29.6,1.042](-[:329.8,0.62]H)%
+                            -[:90,1.042](-[:30.2,0.62]H)=^[:150.4,1.042](-[:90.7,0.62]H)-[:210.9,1.042]%
+                            (=_[:270])-[:150](-[:90,0.62]H)=^[:210](-[:150,0.62]H)-[:270](=^[:330])%
+                            -[:210,0.62]H''', 'Aluminium tris(quinolin-8-olate)')
+
+        alq3.scale(0.4).move_to((3.5, 0, 0))
+
+        self.play(alq3.creation_anim())
+
+        self.wait(20)
+
 
 class Benzene(Slide):
     def construct(self):
@@ -31,7 +66,4 @@ class Benzene(Slide):
         self.wait()
 
 
-class SphericalHarmonicSurface:
-    def __init__(self, l, m):
-        self.l = l
-        self.m = m
+"""https://onlinelibrary.wiley.com/doi/10.1002/pi.1974"""
