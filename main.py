@@ -61,15 +61,38 @@ class Benzene(Slide):
 
         self.next_slide()
 
+        texts = []
+
         for j in range(6):
             sp2 = MathTex("sp^2", font_size=20, color='red')
             sp2.move_to(1.75 * np.array([np.cos(j * np.pi / 3 + np.pi / 6), np.sin(j * np.pi / 3 + np.pi / 6), 0]))
             self.play(Create(sp2), run_time=0.3)
+            texts.append(sp2)
 
         vid = cv2.VideoCapture("assets/test.mp4")
         img = ImageMobject(vid.read()[1])
-        print(img.get_pixel_array().shape)
+
+        self.next_slide()
+
+        self.play(GrowFromPoint(img, 1.75 * np.array([np.cos(np.pi / 3 + np.pi / 6), np.sin(np.pi / 3 + np.pi / 6), 0])))
+        vid.release()
+
+        # self.play(*[FadeOut(j) for j in texts], FadeOut(chem))
+
+
+class OrbitingOrbitals(Slide):
+    def construct(self):
+        vid = cv2.VideoCapture("assets/test.mp4")
+        img = ImageMobject(vid.read()[1])
+
+        self.start_loop()
         self.play(VideoPlayer(img, vid), run_time=2)
+        self.end_loop()
+
+        self.start_loop()
+        self.play(VideoPlayer(img, vid), run_time=2)
+        self.end_loop()
+
         vid.release()
 
 
