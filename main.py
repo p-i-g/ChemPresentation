@@ -1,7 +1,9 @@
+import cv2
 from chanim import *
 # or: from manimlib import *
 from manim_slides.slide import Slide
 import numpy as np
+from utils import VideoPlayer
 
 
 class Introduction(Slide):
@@ -47,7 +49,8 @@ class InorganicVSOrganic(Slide):
 
         self.play(alq3.creation_anim())
 
-        self.wait(20)
+        self.next_slide()
+        self.play(FadeOut(crystal), FadeOut(cross), FadeOut(alq3))
 
 
 class Benzene(Slide):
@@ -63,7 +66,11 @@ class Benzene(Slide):
             sp2.move_to(1.75 * np.array([np.cos(j * np.pi / 3 + np.pi / 6), np.sin(j * np.pi / 3 + np.pi / 6), 0]))
             self.play(Create(sp2), run_time=0.3)
 
-        self.wait()
+        vid = cv2.VideoCapture("assets/test.mp4")
+        img = ImageMobject(vid.read()[1])
+        print(img.get_pixel_array().shape)
+        self.play(VideoPlayer(img, vid), run_time=2)
+        vid.release()
 
 
 """https://onlinelibrary.wiley.com/doi/10.1002/pi.1974"""
