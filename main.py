@@ -69,12 +69,13 @@ class Benzene(Slide):
             self.play(Create(sp2), run_time=0.3)
             texts.append(sp2)
 
-        vid = cv2.VideoCapture("assets/test.mp4")
+        vid = cv2.VideoCapture("assets/rotatinglowres.mp4")
         img = ImageMobject(vid.read()[1])
 
         self.next_slide()
 
         self.play(GrowFromPoint(img, 1.75 * np.array([np.cos(np.pi / 3 + np.pi / 6), np.sin(np.pi / 3 + np.pi / 6), 0])))
+
         vid.release()
 
         # self.play(*[FadeOut(j) for j in texts], FadeOut(chem))
@@ -82,16 +83,33 @@ class Benzene(Slide):
 
 class OrbitingOrbitals(Slide):
     def construct(self):
-        vid = cv2.VideoCapture("assets/test.mp4")
+        vid = cv2.VideoCapture("assets/rotatinglowres.mp4")
         img = ImageMobject(vid.read()[1])
 
         self.start_loop()
         self.play(VideoPlayer(img, vid), run_time=2)
         self.end_loop()
 
-        self.start_loop()
-        self.play(VideoPlayer(img, vid), run_time=2)
-        self.end_loop()
+        vid.release()
+
+        translating = cv2.VideoCapture("assets/translating.mp4")
+
+        translating_img = ImageMobject(translating.read()[1])
+
+        self.play(FadeIn(translating_img))
+
+        self.play(VideoPlayer(translating_img, translating))
+
+        translating.release()
+
+
+class Bonding(Slide):
+    def construct(self):
+        vid = cv2.VideoCapture("assets/bonding.mp4")
+        img = ImageMobject(vid.read()[1])
+
+        self.play(FadeIn(img))
+        self.play(VideoPlayer(img, vid))
 
         vid.release()
 
